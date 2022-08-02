@@ -1,7 +1,9 @@
 <script>
     import { useCanister, useConnect } from "@connect2ic/svelte"
-    
-    const [blog] = useCanister("blog")
+    import Loader from "../components/Loader.svelte"
+
+    //const [blog] = useCanister("blog")
+    const [blog] = useCanister("blog", { mode: "anonymous" })
 
     let postTitle = ""
     let postContent = ""
@@ -35,27 +37,91 @@
 
 
 <h1>New blog post</h1>
-
+<div class="posts">
+    <div class="post">
 <div>
-    <label for="title">Post title:</label>
-    <input type="text" placeholder="Post title" name="title" id="nime" bind:value="{postTitle}"><br>
-    <label for="content">Post description:</label>
-    <input type="text" placeholder="Post description" name="description" bind:value="{postDescription}"><br>
-    <label for="content">Post content:</label>
-    <input type="text" placeholder="Post content" name="content" bind:value="{postContent}"><br>
-    <label for="tags">Tags (comma separated):</label>
-    <input type="text" placeholder="code,svelte,motoko" name="tags" bind:value="{postTags}"><br>
-    <label>
-        <input type=checkbox bind:checked={postPublished}>
-        Published
-    </label>
+    <form>
+        <label for="title">Title:</label>
+        <input type="text" name="title" id="nime" bind:value="{postTitle}" placeholder="Hellow World!" required><br>
+        <label for="content">Description:</label>
+        <input type="text" name="description" bind:value="{postDescription}" maxlength="300" placeholder="Short description, max 300 characters." required><br>
+        <label for="content">Content:</label>
+        <textarea name="content" bind:value="{postContent}" rows="40" cols="50" placeholder="What are you going to write about?" required></textarea><br>
+        <label for="tags">Tags (comma separated):</label>
+        <input type="text" name="tags" bind:value="{postTags}" placeholder="Motoko,Svelte"><br>
+        <label>
+            <input type=checkbox bind:checked={postPublished}>
+            Published
+        </label><br>
+
+
+        <button type="submit" class="create" on:click={createPost} disabled={loading}>
+            {#if loading === true}
+                Loading...
+            {:else}
+                Create post
+            {/if}
+        </button>
+    </form>
     
     
-    <button class="" on:click={createPost} disabled={loading}>
-        {#if loading === true}
-            Loading...
-        {:else}
-            Create post
-        {/if}
-    </button>
+
+    <Loader loading={loading} />
 </div>
+</div>
+</div>
+<style>
+    .posts {
+    text-align: center;
+    width: 500px;
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+
+}
+.post {
+    text-align: left;
+    display: block;
+
+}
+
+input[type=text],
+select,
+textarea {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    white-space: pre-wrap;
+}
+
+input:focus,
+textarea:focus {
+    background-color: azure;
+    outline: none;
+    border: 1px solid #a02480;
+}
+
+.create {
+    color: #a02480;
+    padding: 10px 20px;
+    text-decoration: none;
+    margin: 5px;
+    border-radius: 40px;
+    background-color: aquamarine;
+    margin-top: 10px;
+    font-size: 18px;
+    float: right;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+}
+
+.create:hover {
+    text-decoration: underline;
+}
+</style>

@@ -1,9 +1,10 @@
 <script>
     import { useConnect, useCanister } from "@connect2ic/svelte"
     import { onMount } from "svelte"
-  
-
+    import Loader from "../components/Loader.svelte"
     const [blog] = useCanister("blog", { mode: "anonymous" })
+
+    let loading = true;
 
     const { isConnected, principal, activeProvider } = useConnect({
         onConnect: () => {
@@ -21,13 +22,13 @@
         const res = await $blog.list_array()
         console.log(res)
         posts = res
-        //loading = false
+        loading = false
         return posts
     }
 
     const create_test = async () => {
         console.log("create_test")
-        console.log("loading")
+        //console.log("loading")
         //loading = true
         const res = await $blog.create_test()
         //loading = false
@@ -49,7 +50,7 @@
         return year + "-" + month + "-" + day ;
     }
 
-    onMount(create_test)
+    onMount(get_all_posts)
 </script>
 <h1>Sample blog app</h1>
 <div>
@@ -80,6 +81,7 @@
     {/each}
 </div>
 
+<Loader loading={loading} />
 
 <style>
     h1 {

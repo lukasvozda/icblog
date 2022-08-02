@@ -1,5 +1,5 @@
 <script>
-  import logo from "./assets/dfinity.svg"
+  // import spinner from "./assets/spinner.svg"
   /*
    * Connect2ic provides essential utilities for IC app development
    */
@@ -123,9 +123,11 @@
     }
 
     .content {
+      position: relative;
       text-align:  center;
       justify-content: center;
       margin-top: 100px;
+      min-height: 500px;
       
     }
 
