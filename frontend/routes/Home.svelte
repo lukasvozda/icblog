@@ -6,20 +6,13 @@
 
     let loading = true;
 
-    const { isConnected, principal, activeProvider } = useConnect({
-        onConnect: () => {
-        // Signed in
-        },
-        onDisconnect: () => {
-        // Signed out
-        }
-    })
+    const { isConnected, principal } = useConnect()
 
     let posts = []
 
     const get_all_posts = async () => {
         //loading = true
-        const res = await $blog.list_array()
+        const res = await $blog.get_all_posts()
         console.log(res)
         posts = res
         loading = false
@@ -30,7 +23,7 @@
         console.log("create_test")
         //console.log("loading")
         //loading = true
-        const res = await $blog.create_test()
+        const res = await $blog.list()
         //loading = false
         console.log(res.toString())
         console.log("creating finished")

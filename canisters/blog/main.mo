@@ -5,7 +5,7 @@ import Map "mo:base/HashMap";
 import Hash "mo:base/Hash";
 import Text "mo:base/Text";
 import Iter "mo:base/Iter";
-
+import Prim "mo:prim";
 
 actor {
 
@@ -125,18 +125,27 @@ actor {
         var post_list : List.List<Post> = List.nil();
 
         for ((postNat, post) in iter){
+            //Prim.debugPrint(debug_show(post_list));
             post_list := List.push<Post>(post, post_list);
         };
         return post_list;
     };
 
+    // do not use – making nested arrays
     public query func list(): async  List.List<(PostId,Post)> {
-        // returning records instead of list
         return Iter.toList(blogposts.entries());
     };
 
     public query func list_array(): async [(PostId, Post)] {
         return Iter.toArray(blogposts.entries());
+    };
+
+    func published((id : PostId, p : Post)) : Bool {
+      return p.published
+    };
+
+    public query func list_published(): async [(PostId, Post)] {
+        return Array.filter(Iter.toArray(blogposts.entries()), published);
     };
 
     
