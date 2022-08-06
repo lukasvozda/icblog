@@ -2,17 +2,35 @@
     import { useConnect, useCanister } from "@connect2ic/svelte"
     import { onMount } from "svelte"
     import Loader from "../components/Loader.svelte"
+
     const [blog] = useCanister("blog", { mode: "anonymous" })
 
     let loading = true;
 
-    const { isConnected, principal } = useConnect()
+    const { isConnected, principal } = useConnect({
+        onConnect: () => {
+            console.log("Connected!")
+            list_posts(true)
+        },
+        onDisconnect: () => {
+            console.log("Disconnected!")
+            list_posts(false)
+        }
+    })
 
     let posts = []
 
-    const get_all_posts = async () => {
+    const list_posts = async (connected) => {
+        console.log("Param:",connected)
         //loading = true
-        const res = await $blog.get_all_posts()
+        let res = null
+        if(connected||$isConnected){
+            console.log("Getting all posts.")
+            res = await $blog.list_all()
+        } else {
+            console.log("Getting published posts.")
+            res = await $blog.list_published()
+        }
         console.log(res)
         posts = res
         loading = false
@@ -43,7 +61,8 @@
         return year + "-" + month + "-" + day ;
     }
 
-    onMount(get_all_posts)
+
+    onMount(list_posts)
 </script>
 <h1>Sample blog app</h1>
 <div>
@@ -70,6 +89,11 @@
                 <span class="tag">#{tag}</span>
             {/each}
         </div>
+        {#if post[1].published}
+            <div class="published">Published</div>
+        {:else}
+            <div class="draft">Draft</div>
+        {/if}
     </div>
     {/each}
 </div>
@@ -107,7 +131,7 @@
    
     }
 
-    .author, .date {
+    .author, .date, .published, .draft {
         font-size: 80%;
         color: gray;
         margin-top: 10px;
@@ -122,6 +146,11 @@
     .tag {
         margin-right: 5px;
         color: gray;
+    }
+
+    .published, .draft {
+        text-align: right;
+        margin-bottom: 10px;
     }
 
 </style>

@@ -5,26 +5,20 @@
     //const [blog] = useCanister("blog")
     const [blog] = useCanister("blog", { mode: "anonymous" })
 
-    let postTitle = ""
-    let postContent = ""
-    let postDescription = ""
-    let postPublished = false
-    let postTags = ""
+    let post = {
+        title: "",
+        content: "",
+        description: "",
+        published: false,
+        tags: ""
+    }
+
     let loading = false
 
     const createPost = async () => {
         loading = true
-        let post = {
-            title: postTitle,
-            content: postContent,
-            description: postDescription,
-            // time_created: 0, 
-            // time_updated: 0,
-            published: postPublished,
-            // author: principal,
-            tags: postTags.split(","),
-        }
-        console.log("creating a post: " + postTitle)
+        post.tags = post.tags.replace(" ", "").split(",")
+        
         const res = await $blog.create(post)
         console.log(res)
         // if (res) {
@@ -39,37 +33,37 @@
 <h1>New blog post</h1>
 <div class="posts">
     <div class="post">
-<div>
-    <form>
-        <label for="title">Title:</label>
-        <input type="text" name="title" id="nime" bind:value="{postTitle}" placeholder="Hellow World!" required><br>
-        <label for="content">Description:</label>
-        <input type="text" name="description" bind:value="{postDescription}" maxlength="300" placeholder="Short description, max 300 characters." required><br>
-        <label for="content">Content:</label>
-        <textarea name="content" bind:value="{postContent}" rows="40" cols="50" placeholder="What are you going to write about?" required></textarea><br>
-        <label for="tags">Tags (comma separated):</label>
-        <input type="text" name="tags" bind:value="{postTags}" placeholder="Motoko,Svelte"><br>
-        <label>
-            <input type=checkbox bind:checked={postPublished}>
-            Published
-        </label><br>
+        <div>
+            <form>
+                <label for="title">Title:</label>
+                <input type="text" name="title" id="nime" bind:value="{post.title}" placeholder="Hellow World!"
+                    required><br>
+                <label for="content">Description:</label>
+                <input type="text" name="description" bind:value="{post.description}" maxlength="300"
+                    placeholder="Short description, max 300 characters." required><br>
+                <label for="content">Content:</label>
+                <textarea name="content" bind:value="{post.content}" rows="40" cols="50"
+                    placeholder="What are you going to write about?" required></textarea><br>
+                <label for="tags">Tags (comma separated):</label>
+                <input type="text" name="tags" bind:value="{post.tags}" placeholder="Motoko,Svelte"><br>
+                <label>
+                    <input type=checkbox bind:checked={post.published}>
+                    Published
+                </label><br>
 
 
-        <button type="submit" class="create" on:click={createPost} disabled={loading}>
-            {#if loading === true}
-                Loading...
-            {:else}
-                Create post
-            {/if}
-        </button>
-    </form>
-    
-    
-
-    <Loader loading={loading} />
+                <button type="submit" class="create" on:click={createPost} disabled={loading}>
+                    {#if loading === true}
+                        Loading...
+                    {:else}
+                        Create post
+                    {/if}
+                </button>
+            </form>
+        </div>
+    </div>
 </div>
-</div>
-</div>
+<Loader loading={loading} />
 <style>
     .posts {
     text-align: center;

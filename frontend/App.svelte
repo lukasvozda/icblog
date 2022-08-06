@@ -22,11 +22,12 @@
    * Svelte router import so we can add custom URLS
    */
   import { Router, Link, Route } from "svelte-navigator";
-  import About from "./routes/about.svelte";
+  import About from "./routes/About.svelte";
   import Home from "./routes/Home.svelte";
   import Create from "./routes/Create.svelte";
   import Detail from "./routes/Detail.svelte";
   import Update from "./routes/Update.svelte";
+  import Delete from "./routes/Delete.svelte";
 
   const client = createClient({
     canisters: {
@@ -40,7 +41,7 @@
 </script>
 
 <Connect2ICProvider client={client}>
-  <div class="App">
+  <div class="App" transition:fade>
     <div class="auth-section">
       <ConnectButton />
     </div>
@@ -55,7 +56,6 @@
               </a>
               <Link class="nav-link" to="/">Home</Link>
               <Link class="nav-link" to="about">About</Link>
-              <!-- <Auth /> We will use pluge login -->
           </nav>
       </header>
       <div class="content">
@@ -64,6 +64,7 @@
           <Route path="create" component={Create} />
           <Route path="post/:id" component="{Detail}" /> 
           <Route path="update/:id" component="{Update}" /> 
+          <Route path="delete/:id" component="{Delete}" /> 
       </div>
   </Router>
     <!-- <div class="examples">
@@ -97,6 +98,7 @@
       position: fixed;
       top: 0;
       left: 0;
+      z-index: 99999;
     }
 
     .logo {
@@ -134,32 +136,6 @@
     h1:focus { 
       outline: none;
     }
-
-    .examples {
-        padding: 30px 100px;
-        display: grid;
-        grid-gap: 30px;
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-
-    .examples-title {
-        font-size: 1.3em;
-        margin-bottom: 0;
-        text-align: center;
-    }
-
-    .example {
-        padding: 50px 50px;
-        min-height: 300px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        /*border: 1px solid black;*/
-        /*background: #f4f4f4;*/
-        border-radius: 15px;
-    }
-
 
     .demo-button {
         background: #a02480;

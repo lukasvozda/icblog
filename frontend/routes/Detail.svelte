@@ -2,6 +2,7 @@
     import { useParams } from "svelte-navigator";
     import { useConnect, useCanister } from "@connect2ic/svelte"
     import { onMount } from "svelte";
+    import Loader from "../components/Loader.svelte"
 
     let loading = true
 
@@ -16,24 +17,19 @@
 
     let post = {}
 
-    const get_post = async () => {
+    const getPost = async () => {
         loading = true
-        console.log("Gettin post: " + postId)
         const res = await $blog.get(postId)
-        console.log(res)
-        post = res[0]
-        if (post) {
-            console.log(post)
+        if("ok" in res){
+            post = res.ok
         } else {
-            console.log("Post not found")
+            console.log(Object.keys(res.err)[0])
             post = {
-                title: "<Post not found>",
-                content: "<No content>"
+                title: Object.keys(res.err)[0],
+                content: ""
             }
         }
-        
         loading = false
-        return post
     }
 
     function getDate(timestamp) {
@@ -47,7 +43,7 @@
         return year + "-" + month + "-" + day ;
     }
 
-    onMount(get_post)
+    onMount(getPost)
 
 </script>
 
@@ -78,7 +74,7 @@
     </div>
 
 </div>    
-
+<Loader loading={loading} />
 <style>
         .posts {
             text-align: center;

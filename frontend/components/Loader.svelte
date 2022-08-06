@@ -1,9 +1,11 @@
 <script>
+    import { fade } from 'svelte/transition';
     import spinner from "../assets/spinner.svg"
     export let loading 
+
 </script>
 {#if loading}
-    <div class="loader">
+    <div class="loader" transition:fade="{{deoay: 200, duration: 500}}">
     <img src="{spinner}" alt="loading">
     </div>
 {/if}
@@ -12,7 +14,7 @@
 <style>
     .loader {
         position: absolute;
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.5);
         /*dim the background*/
         top: 0;
         left: 0;

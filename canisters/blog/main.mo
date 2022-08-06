@@ -1,27 +1,34 @@
 import List "mo:base/List";
-import Option "mo:base/Option";
+//import Option "mo:base/Option";
 import Time "mo:base/Time";
 import Map "mo:base/HashMap";
 import Hash "mo:base/Hash";
-import Text "mo:base/Text";
+//import Text "mo:base/Text";
 import Iter "mo:base/Iter";
-import Prim "mo:prim";
+//import Prim "mo:prim";
+import Array "mo:base/Array";
+import Principal "mo:base/Principal";
+import Result "mo:base/Result";
 
 actor {
 
-    public type PostId = Nat;
-    private type Created = Time.Time;
-    private type Updated = Time.Time;
+    type PostId = Nat;
 
-    public type Post = {
+    type Post = {
         title : Text;
-        time_created: Created;
-        time_updated: Updated;
+        time_created: Time.Time;
+        time_updated: Time.Time;
         content : Text;
         description : Text;
         published : Bool;
         author : Principal;
         tags : [Text]
+    };
+
+    type Error = {
+      #PostNotFound;
+      #UserNotAuthenticated;
+      #EmptyTitle;
     };
 
         
@@ -47,6 +54,11 @@ actor {
     };
     
     public shared(msg) func create(post : {title : Text; description : Text; content : Text; published : Bool; tags : [Text]}): async PostId {
+        // commented for local development
+        // if(Principal.isAnonymous(msg.caller)){
+        //     return #err(#UserNotAuthenticated);
+        // };
+
         let postId = next;
         next += 1;
 
@@ -65,36 +77,23 @@ actor {
         return postId;
     };
 
-    
-    public shared(msg) func create_test(): async PostId {
-        let postId = 0;
-        let blogpost: Post = {
-            time_created = Time.now();
-            time_updated = Time.now();
-            title = "Testovací post";
-            content = "Your bones don't break, mine do. That's clear. Your cells react to bacteria and viruses differently than mine. You don't get sick, I do. That's also clear. But for some reason, you and I react the exact same way to water. We swallow it too fast, we choke. We get some in our lungs, we drown. However unreal it may seem, we are connected, you and I. We're on the same curve, just on opposite ends.";
-            description = "Your bones don't break, mine do. That's clear. Your cells react to bacteria and viruses differently than mine. You don't get sick, I do. That's also clear. But for some reason, you and I react the exact same way to water. ";
-            published = true;
-            author = msg.caller;
-            tags = ["Programming", "Svelte"];
-        };
-        
-        blogposts.put(postId, blogpost);
-        
-        return postId;
-    };
-
-    public query func get(id : PostId) : async ?Post {
-        blogposts.get(id)
+    public query func get(id : PostId) : async Result.Result<Post, Error> {
+        let post = blogposts.get(id);
+        return Result.fromOption(post, #PostNotFound);
     };
 
 
-    public shared(msg) func update(id : PostId, post : {title : Text; description : Text; content : Text; published : Bool; tags : [Text]}) : async Bool {
+    public shared(msg) func update(id : PostId, post : {title : Text; description : Text; content : Text; published : Bool; tags : [Text]}) : async Result.Result<(),Error> {
+        // commented for local development
+        // if(Principal.isAnonymous(msg.caller)){
+        //     return #err(#UserNotAuthenticated);
+        // };
+        
         let result = blogposts.get(id);
 
         switch (result){
             case null {
-                return false;
+                return #err(#PostNotFound);
             };
             case (? v){
                 let blogpost : Post = {
@@ -110,14 +109,18 @@ actor {
                 blogposts.put(id, blogpost);
             };
         };
-        return true;
+        return #ok(());
     };
 
 
 
-    public func delete(id : PostId) : async Bool {
+    public shared(msg) func  delete(id : PostId) : async Result.Result<(),Error> {
+      if(Principal.isAnonymous(msg.caller)){
+        return #err(#UserNotAuthenticated);
+      } else {
         blogposts.delete(id);
-        return true;
+        return #ok(());
+      }
     };
 
     public query func get_all_posts() : async List.List<Post> {
@@ -136,7 +139,7 @@ actor {
         return Iter.toList(blogposts.entries());
     };
 
-    public query func list_array(): async [(PostId, Post)] {
+    public query func list_all(): async [(PostId, Post)] {
         return Iter.toArray(blogposts.entries());
     };
 
@@ -146,7 +149,5 @@ actor {
 
     public query func list_published(): async [(PostId, Post)] {
         return Array.filter(Iter.toArray(blogposts.entries()), published);
-    };
-
-    
+    };  
 };

@@ -11,95 +11,76 @@
     const params = useParams();
 
     let postId = parseInt($params.id);
-    console.log($params.id)
 
     let post = {}
+    let loading = true
+    let status = ""
+    let message = ""
 
-    let postTitle = ""
-    let postContent = ""
-    let postDescription = ""
-    let postPublished = false
-    let postTags = ""
-    let loading = false
-
-
-    const get_post = async () => {
+    const getPost = async () => {
         loading = true
-        console.log("Gettin post: " + postId)
         const res = await $blog.get(postId)
-        console.log(res)
-        post = res[0]
-        if (post) {
-            // TODO maybe will be better to do it object-like
-            console.log(post)
-            postTitle = post.title
-            postContent = post.content
-            postDescription = post.description
-            postPublished = post.published
-            postTags = post.tags.join(",")
+        if ("ok" in res) {
+            post = res.ok
+            post.tags = post.tags.join(",")
         } else {
-            console.log("Post not found")
+            // failed to load the post
             post = {
-                title: "<Post not found>",
-                content: "<No content>"
+                title: Object.keys(res.err)[0],
+                content: ""
             }
         }
-        console.log(postTags)
         loading = false
-        return post
     }
 
     const updatePost = async () => {
         loading = true
-        let post = {
-            title: postTitle,
-            content: postContent,
-            description: postDescription,
-            // time_created: 0, 
-            // time_updated: 0,
-            published: postPublished,
-            // author: principal,
-            tags: postTags.split(","),
-        }
-        console.log("creating a post: " + postTitle)
+        post.tags = post.tags.replace(" ", "").split(",")
         const res = await $blog.update(postId, post)
-        console.log(res)
-        // if (res) {
-        //     posts.push([res, post])
-        // }
+        if ("ok" in res) {
+            message = "Post was successfully updated!"
+            status = "ok"
+            post.tags = post.tags.join(",")
+        } else {
+            // failed to update the post
+            message = "Post couldn't be updated: " + Object.keys(res.err)[0]
+            status = "err"
+        }
         loading = false
         return res
-    } 
-
-    onMount(get_post)
+    }
+    onMount(getPost)
 </script>
 
 <h1>Update post: {post.title}</h1>
+<div class="back">
+    <a href="/post/{postId}">Go back</a>
+</div>  
 <div class="posts">
     <div class="post">
         <div>
             <form>
                 <label for="title">Post title:</label>
-                <input type="text" name="title" id="nime" bind:value="{postTitle}" required><br>
+                <input type="text" name="title" id="nime" bind:value="{post.title}" required><br>
                 <label for="content">Post description:</label>
-                <input type="text" name="description" bind:value="{postDescription}" maxlength="300" required><br>
+                <input type="text" name="description" bind:value="{post.description}" maxlength="300" required><br>
                 <label for="content">Post content:</label>
-                <textarea name="content" bind:value="{postContent}" rows="40" cols="50" required></textarea><br>
+                <textarea name="content" bind:value="{post.content}" rows="40" cols="50" required></textarea><br>
                 <label for="tags">Tags (comma separated):</label>
-                <input type="text" name="tags" bind:value="{postTags}"><br>
+                <input type="text" name="tags" bind:value="{post.tags}"><br>
                 <label>
-                    <input type=checkbox bind:checked={postPublished}>
+                    <input type=checkbox bind:checked={post.published}>
                     Published
                 </label><br>
-
-
+                <div class="message {status}">{message}</div>
+                
                 <button type="submit" class="update" on:click={updatePost} disabled={loading}>
                     {#if loading === true}
                         Loading...
                     {:else}
                         Update post
                     {/if}
-                </button>
+                </button> 
             </form>
         </div>
     </div>
@@ -116,14 +97,29 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 50px;
+    margin-bottom: 100px;
 
 }
 
 .post {
     text-align: left;
     display: block;
-
 }
+
+.message {
+    margin-top: 20px;
+    float: left;
+    font-weight: bold;
+}
+
+.err {
+    color:crimson;
+}
+
+.ok {
+    color:rgb(0, 173, 116);
+}
+
 input[type=text],
 select,
 textarea {
@@ -159,7 +155,6 @@ input:focus, textarea:focus {
 .update:hover {
     text-decoration: underline;
 }
-
 
 </style>
 
