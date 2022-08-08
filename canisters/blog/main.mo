@@ -53,11 +53,15 @@ actor {
         stableposts := [];
     };
     
-    public shared(msg) func create(post : {title : Text; description : Text; content : Text; published : Bool; tags : [Text]}): async PostId {
+    public shared(msg) func create(post : {title : Text; description : Text; content : Text; published : Bool; tags : [Text]}): async Result.Result<(),Error> {
         // commented for local development
         // if(Principal.isAnonymous(msg.caller)){
         //     return #err(#UserNotAuthenticated);
         // };
+
+        if(post.title == ""){
+          return #err(#EmptyTitle)
+        };
 
         let postId = next;
         next += 1;
@@ -74,7 +78,7 @@ actor {
         };
         
         blogposts.put(postId, blogpost);
-        return postId;
+        return #ok(());
     };
 
     public query func get(id : PostId) : async Result.Result<Post, Error> {
@@ -88,7 +92,11 @@ actor {
         // if(Principal.isAnonymous(msg.caller)){
         //     return #err(#UserNotAuthenticated);
         // };
-        
+
+        if(post.title == ""){
+          return #err(#EmptyTitle)
+        };
+                
         let result = blogposts.get(id);
 
         switch (result){

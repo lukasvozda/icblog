@@ -41,7 +41,7 @@
 </script>
 
 <Connect2ICProvider client={client}>
-  <div class="App" transition:fade>
+  <div class="App">
     <div class="auth-section">
       <ConnectButton />
     </div>
@@ -75,94 +75,107 @@
 </Connect2ICProvider>
 
 <style global>
-    body {
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-        sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        color: #424242;
-    }
+  body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+      sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      color: #424242;
+  }
 
-    button {
-        font-weight: 600;
-    }
+  button {
+      font-weight: 600;
+  }
 
-    nav {
+  nav {
+    padding: 1em;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: left;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+  }
+
+  .logo {
+    font-size: 120%;
+    padding: 10px;
+    font-weight: bold;
+    text-decoration: none;
+    color:#a02480;
+  }
+
+  .nav-link {
+    padding: 10px;
+    color: black;
+    text-decoration: none;
+  }
+
+  .nav-link:hover {
+    text-decoration: underline;
+    transition: 0.4s ease;
+  }
+
+  a[aria-current]{
+      text-decoration: underline;
+  }
+
+  .content {
+    position: relative;
+    text-align:  center;
+    justify-content: center;
+    margin-top: 100px;
+    min-height: 500px;
+    
+  }
+
+  h1:focus { 
+    outline: none;
+  }
+
+  .demo-button {
+      background: #a02480;
+      padding: 0 1.3em;
+      margin-top: 1em;
+      border-radius: 60px;
+      font-size: 0.7em;
+      height: 35px;
+      outline: 0;
+      border: 0;
+      cursor: pointer;
+      color: white;
+  }
+
+  .demo-button:active {
+      color: white;
+      background: #979799;
+  }
+
+  .auth-section {
       padding: 1em;
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      text-align: left;
+      text-align: right;
       position: fixed;
       top: 0;
-      left: 0;
-      z-index: 99999;
-    }
+      right: 0;
+  }
+  .message {
+    margin-top: 20px;
+    float: left;
+    font-weight: bold;
+  }
 
-    .logo {
-      font-size: 120%;
-      padding: 10px;
-      font-weight: bold;
-      text-decoration: none;
-      color:#a02480;
-    }
+  .err {
+    color: crimson;
+  }
 
-    .nav-link {
-      padding: 10px;
-      color: black;
-      text-decoration: none;
-    }
-
-    .nav-link:hover {
-      text-decoration: underline;
-      transition: 0.4s ease;
-    }
-
-    a[aria-current]{
-        text-decoration: underline;
-    }
-
-    .content {
-      position: relative;
-      text-align:  center;
-      justify-content: center;
-      margin-top: 100px;
-      min-height: 500px;
-      
-    }
-
-    h1:focus { 
-      outline: none;
-    }
-
-    .demo-button {
-        background: #a02480;
-        padding: 0 1.3em;
-        margin-top: 1em;
-        border-radius: 60px;
-        font-size: 0.7em;
-        height: 35px;
-        outline: 0;
-        border: 0;
-        cursor: pointer;
-        color: white;
-    }
-
-    .demo-button:active {
-        color: white;
-        background: #979799;
-    }
-
-    .auth-section {
-        padding: 1em;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        text-align: right;
-        position: fixed;
-        top: 0;
-        right: 0;
-    }
+  .ok {
+    color: rgb(0, 173, 116);
+  }
 </style>
