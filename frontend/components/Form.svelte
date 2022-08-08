@@ -6,7 +6,7 @@
 
 <form>
     <label for="title">Title:</label>
-    <input type="text" name="title" id="nime" bind:value="{post.title}" placeholder="Hellow World!"><br>
+    <input type="text" name="title" id="nime" bind:value="{post.title}" placeholder="Hellow World!" required><br>
     <label for="content">Description:</label>
     <input type="text" name="description" bind:value="{post.description}" maxlength="300"
         placeholder="Short description, max 300 characters." required><br>
