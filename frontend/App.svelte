@@ -1,5 +1,4 @@
 <script>
-  // import spinner from "./assets/spinner.svg"
   /*
    * Connect2ic provides essential utilities for IC app development
    */
@@ -12,11 +11,6 @@
    * Import canister definitions like this:
    */
   import * as blog from "../.dfx/local/canisters/blog"
-  /*
-   * Some examples to get you started
-   */
-  // import Counter from "./components/Counter.svelte"
-  // import Profile from "./components/Profile.svelte"
 
   /*
    * Svelte router import so we can add custom URLS
@@ -29,6 +23,7 @@
   import Update from "./routes/Update.svelte";
   import Delete from "./routes/Delete.svelte";
 
+  // Connect2ic client
   const client = createClient({
     canisters: {
       blog,
@@ -46,8 +41,6 @@
       <ConnectButton />
     </div>
     <ConnectDialog />
-
-
     <Router>
       <header>
           <nav id="nav">
@@ -59,22 +52,21 @@
           </nav>
       </header>
       <div class="content">
-          <Route path="/" component={Home} answer={42} />
+          <Route path="/" component={Home} />
           <Route path="about" component={About} />
           <Route path="create" component={Create} />
-          <Route path="post/:id" component="{Detail}" /> 
+          <Route path="post/:id" component="{Detail}" /> <!-- Dynamic routes for post detail, update and delete-->
           <Route path="update/:id" component="{Update}" /> 
           <Route path="delete/:id" component="{Delete}" /> 
       </div>
-  </Router>
-    <!-- <div class="examples">
-      <Counter />
-      <Profile />
-    </div> -->
+    </Router>
   </div>
 </Connect2ICProvider>
 
-<style global>
+<style global> 
+  /* 
+    Global styles
+  */*
   body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -177,5 +169,9 @@
 
   .ok {
     color: rgb(0, 173, 116);
+  }
+
+  .ql-toolbar {
+    margin-top: 10px;
   }
 </style>

@@ -10,46 +10,34 @@
     const { isConnected, principal } = useConnect({
         onConnect: () => {
             console.log("Connected!")
-            list_posts(true)
+            list_posts(true) // List all posts for connected user
         },
         onDisconnect: () => {
             console.log("Disconnected!")
-            list_posts(false)
+            list_posts(false) // List only published posts for disconnected user
         }
     })
 
     let posts = []
 
     const list_posts = async (connected) => {
-        console.log("Param:",connected)
-        //loading = true
+        console.log("Param:", connected)
         let res = null
-        if(connected||$isConnected){
+        if (connected || $isConnected) {
             console.log("Getting all posts.")
-            res = await $blog.list_all()
+            res = await $blog.list_all() // List all posts
         } else {
             console.log("Getting published posts.")
+            // List only published posts
+            // We are doing this in the front end only as data are not sensitive, for 100 % security, we should verify principal in the backend too
             res = await $blog.list_published()
         }
-        console.log(res)
         posts = res
         loading = false
         return posts
     }
 
-    const create_test = async () => {
-        console.log("create_test")
-        //console.log("loading")
-        //loading = true
-        const res = await $blog.list()
-        //loading = false
-        console.log(res.toString())
-        console.log("creating finished")
-        //get_post()
-        get_all_posts()
-        
-    }
-
+    // Function that converts unix timestamp to readable date
     function getDate(timestamp) {
         var converted = Number(timestamp) / 1000000;
         var date = new Date(converted);
@@ -58,9 +46,8 @@
         var day = ("0" + date.getDate()).substr(-2);
 
 
-        return year + "-" + month + "-" + day ;
+        return year + "-" + month + "-" + day;
     }
-
 
     onMount(list_posts)
 </script>
@@ -68,15 +55,13 @@
 <div>
     {#if $isConnected}
         <p>Wallet principal: <span style="font-size: 0.7em">{$principal}</span></p>
-        <a href="/create" class="create">Create a post</a>
+        <a href="/create" class="create">Create a post</a> <!-- Only authenticated user can create a post -->
     {:else}
         <p class="example-disabled">Connect with a wallet to create a post</p>
     {/if}
 </div>
 <div class="posts">
-
-    {#each posts as post }
-    <!-- <li>{post[0]} - {post[1].title} <button on:click={() => delete_post(post[0])} class="x">x</button></li> -->
+    {#each posts as post } <!-- Loop through each post -->
     <div class="post">
         <a href="/post/{post[0]}"><h2 class="post-title">{post[1].title}</h2></a>
         <div class="author">Written by: {post[1].author}  </div>
@@ -97,7 +82,6 @@
     </div>
     {/each}
 </div>
-
 <Loader loading={loading} />
 
 <style>

@@ -4,14 +4,16 @@
     import { useCanister, useConnect } from "@connect2ic/svelte"
     import Loader from "../components/Loader.svelte"
     
+    // Use anonymouse mode only for local development
+    // For production use, we want only users that signed with wallet to create/update/delete posts
     //const [blog] = useCanister("blog")
     const [blog] = useCanister("blog", { mode: "anonymous" })
 
-    const { isConnected, principal } = useConnect()
+    const { isConnected } = useConnect()
 
     const params = useParams();
 
-    let postId = parseInt($params.id);
+    let postId = parseInt($params.id); // Get post ID from the URL
     console.log($params.id)
 
     let post = {}
@@ -19,6 +21,7 @@
     let status = ""
     let message = ""
 
+    // Get the post that we want to delete
     const getPost = async () => {
         const res = await $blog.get(postId)
         if("ok" in res){
@@ -35,21 +38,21 @@
 
     const deletePost = async () => {
         loading = true
-        const res = await $blog.delete(postId)
+        const res = await $blog.delete(postId) // Call delete function to the backend canister
         console.log(res)
-        if ("ok" in res){
+        if ("ok" in res){ // Post delete succeeded
             message = "Post was successfully deleted"
             status = "ok"
-        } else {
-            message = "Post couldn't be deleted: " + Object.keys(res.err)[0]
+        } else { // Post delete failed
+            message = "Post couldn't be deleted: " + Object.keys(res.err)[0] // error message
             status = "err"
         }
         loading = false
     }
 
     onMount(getPost)
-
 </script>
+
 {#if $isConnected && post.title} 
 <h1>Delete post: {post.title||"Loading"}</h1>
 <div class="question">Are you sure to delete this post?</div>

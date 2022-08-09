@@ -1,11 +1,12 @@
 <script>
-
     import { useParams } from "svelte-navigator";
     import { onMount } from "svelte";
     import { useCanister, useConnect } from "@connect2ic/svelte"
     import Loader from "../components/Loader.svelte"
     import Form from "../components/Form.svelte"
     
+    // Use anonymouse mode only for local development
+    // For production use, we want only users that signed with wallet to create/update/delete posts
     //const [blog] = useCanister("blog")
     const [blog] = useCanister("blog", { mode: "anonymous" })
 
@@ -36,7 +37,7 @@
 
     const updatePost = async () => {
         loading = true
-        post.tags = post.tags.replace(" ", "").split(",")
+        post.tags = post.tags.replace(" ", "").split(",") // Convert string with tags to array
         const res = await $blog.update(postId, post)
         if ("ok" in res) {
             message = "Post was successfully updated!"
@@ -46,7 +47,7 @@
             message = "Post couldn't be updated: " + Object.keys(res.err)[0]
             status = "err"
         }
-        post.tags = post.tags.join(",")
+        post.tags = post.tags.join(",") // Convert array back to string
         loading = false
         return res
     }

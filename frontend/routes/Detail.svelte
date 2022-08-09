@@ -4,15 +4,16 @@
     import { onMount } from "svelte";
     import Loader from "../components/Loader.svelte"
 
-    let loading = true
+    let loading = false
 
+    // Anonymous mode is enough for post reading
     const [blog] = useCanister("blog", { mode: "anonymous" })
 
-    const { isConnected } = useConnect()
+    const { isConnected } = useConnect() // Getting isConnected attribute from the connect2ic module so we know, whether user is authenticated with wallet
 
     const params = useParams();
 
-    let postId = parseInt($params.id);
+    let postId = parseInt($params.id); // Get post ID from the URL
     console.log($params.id)
 
     let post = {}
@@ -22,6 +23,7 @@
         const res = await $blog.get(postId)
         if("ok" in res){
             post = res.ok
+
         } else {
             console.log(Object.keys(res.err)[0])
             post = {
@@ -32,6 +34,7 @@
         loading = false
     }
 
+    // Function that converts unix timestamp to readebla date
     function getDate(timestamp) {
         var converted = Number(timestamp) / 1000000;
         var date = new Date(converted);
@@ -39,12 +42,10 @@
         var month = ("0" + (date.getMonth() + 1)).substr(-2);
         var day = ("0" + date.getDate()).substr(-2);
 
-
         return year + "-" + month + "-" + day ;
     }
 
     onMount(getPost)
-
 </script>
 
 <h1>{post.title || 'Loading'}</h1>
@@ -58,18 +59,16 @@
         {/each}
     {/if}
 </div>
-{#if $isConnected}
+{#if $isConnected} <!-- Only authenticated users can Edit or Delete posts-->
     <a href="/update/{postId}" class="edit">Edit</a>
     <a href="/delete/{postId}" class="delete">Delete</a>
 {:else}
     <div>Connect your wallet to edit or delete post.</div>
 {/if}
 <div class="posts">
-    <!-- <li>{post[0]} - {post[1].title} <button on:click={() => delete_post(post[0])} class="x">x</button></li> -->
     <div class="post">
-        
-        <div class="post-description">
-            {post.content}
+        <div id="post-content">
+            {@html post.content} <!-- Render post content as HTML not as text -->
         </div>
     </div>
 

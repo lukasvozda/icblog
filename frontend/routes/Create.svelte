@@ -1,14 +1,18 @@
 <script>
-    import { useCanister, useConnect } from "@connect2ic/svelte"
-    import Loader from "../components/Loader.svelte"
-    import Form from "../components/Form.svelte"
+    import { useCanister } from "@connect2ic/svelte"
+    import Loader from "../components/Loader.svelte" // Loader animation
+    import Form from "../components/Form.svelte" // Form component is shared for post Create and Update route
 
+    // Use anonymouse mode only for local development
+    // For production use, we want only users that signed with wallet to create/update/delete posts
     //const [blog] = useCanister("blog")
     const [blog] = useCanister("blog", { mode: "anonymous" })
 
     let loading = false
     let status = ""
     let message = ""
+
+    // This is our simplified post object, other attributes are going to be set in the back-end
     let post = {
         title: "",
         content: "",
@@ -16,28 +20,22 @@
         published: false,
         tags: ""
     }
-
     
     const createPost = async () => {
         loading = true
-        console.log(post.tags)
-        post.tags = post.tags.replace(" ", "").split(",")
-        
-        const res = await $blog.create(post)
-        console.log(res)
-        if("ok" in res){
+        post.tags = post.tags.replace(" ", "").split(",") // Convert tags from string to array
+        const res = await $blog.create(post) // Create a post
+        if("ok" in res){ // Post creation succeeded
             message = "Post was successfully created!"
             status = "ok"
-        } else {
+        } else { // Post creation failed
             message = "Post couldn't be created: " + Object.keys(res.err)[0]
             status = "err"
-            
         }
         post.tags = post.tags.join(",")
         loading = false
-    } 
+    }
 </script>
-
 
 <h1>New blog post</h1>
 <div class="back">
