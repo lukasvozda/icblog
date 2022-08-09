@@ -15,10 +15,12 @@ We assume that you have:
 
 Once you have cloned the repository, follow this process in your terminal:
 
-1. run npm install (installs JS dependencies)
-2. dfx start --background (or run it in separate terminal window)
-3. dfx deploy (deploy your canister locally)
-4. npm run dev (run local dev server)
+```
+run npm install (installs JS dependencies)
+dfx start --background (or run it in separate terminal window)
+dfx deploy (deploy your canister locally)
+npm run dev (run local dev server)
+```
 
 ### Deploy to the mainnet
 
