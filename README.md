@@ -1,10 +1,12 @@
 # IC BLOG sample pp
 This project was created as a sample app for the Internet Computer so new developers to the ecosystem have some working examples to learn from.
 
+### Backend
 The project consist of a backend written in Motoko programming language, that has been designed specifically for writing smart contracts on the Internet Computer Protocol. You can find backend code in the cansiters/blog/main.mo file.
 
 Backend defines a Post type, HashMap database and methods for CRUD interace. You can find it in the frontend directory.
 
+### Frontend
 The front-end is written using the Svelte framework. There are Routes for Create, Read, Update, Delete, List posts. You can find it in the frontend/routes directory.
 
 It should give a quick start to anyone thinking about starting it's own blog site on the Internet Computer or just want to learn how to create a simple dapp.
@@ -36,7 +38,7 @@ dfx deploy --network ic
 ```
 You are going to need a cycles wallet. Go through [this tutorial](https://internetcomputer.org/docs/current/developer-docs/quickstart/network-quickstart) to make it working.
 
-## Footnote
+# Footnote
 
 This project was created by Lukas Vozda, big Dfinity supporter. If you want to reach out to me here are my social network handles:
 
