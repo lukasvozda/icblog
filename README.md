@@ -9,7 +9,9 @@ The front-end is written using the Svelte framework. There are Routes for Create
 
 It should give a quick start to anyone thinking about starting it's own blog site on the Internet Computer or just want to learn how to create a simple dapp.
 
-I use Svelte starter app created by @miamaruq, he also created starter apps for React, Vue or TS. If you want to use different framework, you can find it here https://github.com/MioQuispe/create-ic-app. This starter app also utilizes the [Connect2IC toolkit](https://github.com/Connect2IC/connect2ic) that simplifies the process of wallet connection for different wallet providers.
+I use Svelte starter app created by @miamaruq, he also created [starter apps for React, Vue or TS](https://github.com/MioQuispe/create-ic-app). If you want to use different framework, you can follow his repository. This starter app also utilizes the [Connect2IC toolkit](https://github.com/Connect2IC/connect2ic) that simplifies the process of wallet connection for different wallet providers.
+
+You can see running version of this project on this link:
 
 ## Local deployment 
 
@@ -26,10 +28,19 @@ dfx deploy (deploy your canister locally)
 npm run dev (run local dev server)
 ```
 
-### Deploy to the mainnet
+## Deploy to the mainnet
 
 If you have working local development replica, you can deploy your project to the mainnet by running this command:
 ```
 dfx deploy --network ic
 ```
 You are going to need a cycles wallet. Go through [this tutorial](https://internetcomputer.org/docs/current/developer-docs/quickstart/network-quickstart) to make it working.
+
+## Footnote
+
+This project was created by Lukas Vozda, big Dfinity supporter. If you want to reach out to me here are my social network handles:
+
+- @lukas_icp on Twitter
+- @lukas on Open Chat
+- @lukevoz on Distrikt
+- LukeVoz#0574 on Discord
