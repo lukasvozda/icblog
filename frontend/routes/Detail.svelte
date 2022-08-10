@@ -51,6 +51,9 @@
 </script>
 
 <h1>{post.title || 'Loading'}</h1>
+<div class="back">
+    <Link to="/">Go back</Link>
+</div>  
 <div class="author">Written by: {post.author}  </div>
 <div class="date">Last updated: {getDate(post.time_updated)}</div>
 <div class="date">Date created: {getDate(post.time_created)}</div>

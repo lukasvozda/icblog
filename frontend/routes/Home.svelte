@@ -3,6 +3,7 @@
     import { onMount } from "svelte"
     import { Link } from "svelte-navigator";
     import Loader from "../components/Loader.svelte"
+    import logo from "../assets/dfinity.svg"
 
     const [blog] = useCanister("blog", { mode: "anonymous" })
 
@@ -51,13 +52,14 @@
 
     onMount(list_posts)
 </script>
+<img src="{logo}" alt="">
 <h1>Sample blog app</h1>
 <div>
     {#if $isConnected}
         <p>Wallet principal: <span style="font-size: 0.7em">{$principal}</span></p>
         <Link to="/create" class="create">Create a post</Link> <!-- Only authenticated user can create a post -->
     {:else}
-        <p class="example-disabled">Connect with a wallet to create a post</p>
+        <p class="example-disabled">Connect with a wallet to create a post.<br> You are able to see only published posts now.</p>
     {/if}
 </div>
 <div class="posts">
