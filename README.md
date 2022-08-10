@@ -1,10 +1,12 @@
-# IC BLOG sample pp
+# IC BLOG sample app
 This project was created as a sample app for the Internet Computer so new developers to the ecosystem have some working examples to learn from.
+
+You can try running version of this project on this link: [https://gaqra-oqaaa-aaaah-qc4qa-cai.ic0.app](https://gaqra-oqaaa-aaaah-qc4qa-cai.ic0.app)
 
 ### Backend
 The project consist of a backend written in Motoko programming language, that has been designed specifically for writing smart contracts on the Internet Computer Protocol. You can find backend code in the cansiters/blog/main.mo file.
 
-Backend defines a Post type, HashMap database and methods for CRUD interace. You can find it in the frontend directory.
+Backend defines a Post type, HashMap database and methods for CRUD interace.
 
 ### Frontend
 The front-end is written using the Svelte framework. There are Routes for Create, Read, Update, Delete, List posts. You can find it in the frontend/routes directory.
@@ -12,8 +14,6 @@ The front-end is written using the Svelte framework. There are Routes for Create
 It should give a quick start to anyone thinking about starting it's own blog site on the Internet Computer or just want to learn how to create a simple dapp.
 
 I use Svelte starter app created by @miamaruq, he also created [starter apps for React, Vue or TS](https://github.com/MioQuispe/create-ic-app). If you want to use different framework, you can follow his repository. This starter app also utilizes the [Connect2IC toolkit](https://github.com/Connect2IC/connect2ic) that simplifies the process of wallet connection for different wallet providers.
-
-You can see running version of this project on this link:
 
 ## Local deployment 
 

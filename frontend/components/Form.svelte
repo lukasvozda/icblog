@@ -35,7 +35,7 @@
         placeholder="Short description, max 300 characters." required><br>
 
     <label id="content-label" for="content">Content:</label>
-    <div class="editor" id="editor" use:quill={options} on:text-change={e => console.log(e)}></div>
+    <div class="editor" id="editor" use:quill={options} on:text-change={e => post.content = e.detail.html}></div>
     <!-- <textarea name="content" bind:value="{post.content}" rows="40" cols="50"
         placeholder="What are you going to write about?" required></textarea><br> -->
     <label for="tags">Tags (comma separated):</label>
