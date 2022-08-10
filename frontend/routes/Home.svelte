@@ -22,7 +22,7 @@
     let posts = []
 
     const list_posts = async (connected) => {
-        let res = null
+        let res;
         if (connected || $isConnected) {
             console.log("Getting all posts.")
             res = await $blog.list_all() // List all posts

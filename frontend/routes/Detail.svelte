@@ -3,6 +3,7 @@
     import { useConnect, useCanister } from "@connect2ic/svelte"
     import { onMount } from "svelte";
     import { Link } from "svelte-navigator";
+    import { marked } from 'marked';
     import Loader from "../components/Loader.svelte"
 
     let loading = false
@@ -69,7 +70,7 @@
 <div class="posts">
     <div class="post">
         <div id="post-content">
-            {@html post.content || 'Loading...'} <!-- Render post content as HTML not as text -->
+            {@html marked(post.content || "Loading")} <!-- Render post content as HTML not as text -->
         </div>
     </div>
 

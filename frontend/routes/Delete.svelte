@@ -41,7 +41,6 @@
     const deletePost = async () => {
         loading = true
         const res = await $blog.delete(postId) // Call delete function to the backend canister
-        console.log(res)
         if ("ok" in res){ // Post delete succeeded
             message = "Post was successfully deleted"
             status = "ok"

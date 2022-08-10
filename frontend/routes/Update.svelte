@@ -38,6 +38,7 @@
 
     const updatePost = async () => {
         loading = true
+        console.log(post.content)
         post.tags = post.tags.replace(" ", "").split(",") // Convert string with tags to array
         const res = await $blog.update(postId, post)
         if ("ok" in res) {
