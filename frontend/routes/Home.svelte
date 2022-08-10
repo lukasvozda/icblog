@@ -1,6 +1,7 @@
 <script>
     import { useConnect, useCanister } from "@connect2ic/svelte"
     import { onMount } from "svelte"
+    import { Link } from "svelte-navigator";
     import Loader from "../components/Loader.svelte"
 
     const [blog] = useCanister("blog", { mode: "anonymous" })
@@ -21,7 +22,6 @@
     let posts = []
 
     const list_posts = async (connected) => {
-        console.log("Param:", connected)
         let res = null
         if (connected || $isConnected) {
             console.log("Getting all posts.")
@@ -55,7 +55,7 @@
 <div>
     {#if $isConnected}
         <p>Wallet principal: <span style="font-size: 0.7em">{$principal}</span></p>
-        <a href="/create" class="create">Create a post</a> <!-- Only authenticated user can create a post -->
+        <Link to="/create" class="create">Create a post</Link> <!-- Only authenticated user can create a post -->
     {:else}
         <p class="example-disabled">Connect with a wallet to create a post</p>
     {/if}
@@ -63,7 +63,7 @@
 <div class="posts">
     {#each posts as post } <!-- Loop through each post -->
     <div class="post">
-        <a href="/post/{post[0]}"><h2 class="post-title">{post[1].title}</h2></a>
+        <Link to="/post/{post[0]}"><h2 class="post-title">{post[1].title}</h2></Link>
         <div class="author">Written by: {post[1].author}  </div>
         <div class="post-description">
             {post[1].description}

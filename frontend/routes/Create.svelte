@@ -1,5 +1,6 @@
 <script>
     import { useCanister } from "@connect2ic/svelte"
+    import { Link } from "svelte-navigator";
     import Loader from "../components/Loader.svelte" // Loader animation
     import Form from "../components/Form.svelte" // Form component is shared for post Create and Update route
 
@@ -39,7 +40,7 @@
 
 <h1>New blog post</h1>
 <div class="back">
-    <a href="/">Go back</a>
+    <Link to="/">Go back</Link>
 </div> 
 <div class="posts">
     <div class="post">

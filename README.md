@@ -40,9 +40,7 @@ You are going to need a cycles wallet. Go through [this tutorial](https://intern
 
 # Footnote
 
-This project was created by Lukas Vozda, big Dfinity supporter. If you want to reach out to me here are my social network handles:
+This project was created by Lukas Vozda, big Dfinity supporter. If you want to reach out to me and ask some qustion here are my social network handles:
 
-- @lukas_icp on Twitter
 - @lukas on Open Chat
-- @lukevoz on Distrikt
-- LukeVoz#0574 on Discord
+- @lukas_icp on Twitter

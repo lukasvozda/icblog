@@ -1,7 +1,8 @@
 <script>
     import { useParams } from "svelte-navigator";
     import { onMount } from "svelte";
-    import { useCanister, useConnect } from "@connect2ic/svelte"
+    import { useCanister } from "@connect2ic/svelte"
+    import { Link } from "svelte-navigator";
     import Loader from "../components/Loader.svelte"
     import Form from "../components/Form.svelte"
     
@@ -56,7 +57,7 @@
 
 <h1>Update post: {post.title}</h1>
 <div class="back">
-    <a href="/post/{postId}">Go back</a>
+    <Link to="/post/{postId}">Go back</Link>
 </div>  
 <div class="posts">
     <div class="post">

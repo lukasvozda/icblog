@@ -2,6 +2,7 @@
     import { useParams } from "svelte-navigator";
     import { useConnect, useCanister } from "@connect2ic/svelte"
     import { onMount } from "svelte";
+    import { Link } from "svelte-navigator";
     import Loader from "../components/Loader.svelte"
 
     let loading = false
@@ -60,15 +61,15 @@
     {/if}
 </div>
 {#if $isConnected} <!-- Only authenticated users can Edit or Delete posts-->
-    <a href="/update/{postId}" class="edit">Edit</a>
-    <a href="/delete/{postId}" class="delete">Delete</a>
+    <Link to="/update/{postId}" class="edit">Edit</Link>
+    <Link to="/delete/{postId}" class="delete">Delete</Link>
 {:else}
     <div>Connect your wallet to edit or delete post.</div>
 {/if}
 <div class="posts">
     <div class="post">
         <div id="post-content">
-            {@html post.content} <!-- Render post content as HTML not as text -->
+            {@html post.content || 'Loading...'} <!-- Render post content as HTML not as text -->
         </div>
     </div>
 
@@ -108,27 +109,5 @@
         .tag {
             margin-right: 5px;
             color: gray;
-        }
-
-        .edit,
-        .delete {
-            color: #a02480;
-            padding: 10px 20px;
-            text-decoration: none;
-            margin: 5px;
-            border-radius: 40px;
-        }
-
-        .edit:hover,
-        .delete:hover {
-            text-decoration: underline;
-        }
-
-        .edit {
-            background-color: aquamarine;
-        }
-
-        .delete {
-            background-color: burlywood;
         }
 </style>

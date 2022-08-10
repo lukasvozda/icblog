@@ -2,14 +2,15 @@
     import { useParams } from "svelte-navigator";
     import { onMount } from "svelte";
     import { useCanister, useConnect } from "@connect2ic/svelte"
+    import { Link } from "svelte-navigator";
     import Loader from "../components/Loader.svelte"
     
     // Use anonymouse mode only for local development
     // For production use, we want only users that signed with wallet to create/update/delete posts
-    //const [blog] = useCanister("blog")
-    const [blog] = useCanister("blog", { mode: "anonymous" })
+    const [blog] = useCanister("blog")
+    //const [blog] = useCanister("blog", { mode: "anonymous" })
 
-    const { isConnected } = useConnect()
+    const { isConnected } = useConnect() 
 
     const params = useParams();
 
@@ -20,6 +21,7 @@
     let loading = false
     let status = ""
     let message = ""
+    let deleted = true
 
     // Get the post that we want to delete
     const getPost = async () => {
@@ -43,6 +45,7 @@
         if ("ok" in res){ // Post delete succeeded
             message = "Post was successfully deleted"
             status = "ok"
+            deleted = true
         } else { // Post delete failed
             message = "Post couldn't be deleted: " + Object.keys(res.err)[0] // error message
             status = "err"
@@ -56,7 +59,7 @@
 {#if $isConnected && post.title} 
 <h1>Delete post: {post.title||"Loading"}</h1>
 <div class="question">Are you sure to delete this post?</div>
-<a href="/post/{postId}">Go back</a>
+<Link to="/post/{postId}">Go back</Link>
 <button type="submit" class="delete" on:click={deletePost} disabled={loading}>
     {#if loading === true}
         Loading...
@@ -96,6 +99,8 @@ You need to connect with a wallet do delete post
     .message {
         margin-top: 20px;
         font-weight: bold;
+        display: block;
+        width: 100%;
     }
 
     .err {

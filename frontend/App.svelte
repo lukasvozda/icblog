@@ -174,4 +174,26 @@
   .ql-toolbar {
     margin-top: 10px;
   }
+
+  .edit,
+  .delete {
+      color: #a02480;
+      padding: 10px 20px;
+      text-decoration: none;
+      margin: 5px;
+      border-radius: 40px;
+  }
+
+  .edit:hover,
+  .delete:hover {
+      text-decoration: underline;
+  }
+
+  .edit {
+      background-color: aquamarine;
+  }
+
+  .delete {
+      background-color: burlywood;
+  }
 </style>
