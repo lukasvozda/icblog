@@ -116,6 +116,15 @@
       text-decoration: underline;
   }
 
+  a {
+    color: #07167b;
+    text-decoration: none;
+  }
+
+  a:hover {
+      text-decoration: underline;
+  }
+
   .content {
     position: relative;
     text-align:  center;
@@ -127,24 +136,6 @@
 
   h1:focus { 
     outline: none;
-  }
-
-  .demo-button {
-      background: #a02480;
-      padding: 0 1.3em;
-      margin-top: 1em;
-      border-radius: 60px;
-      font-size: 0.7em;
-      height: 35px;
-      outline: 0;
-      border: 0;
-      cursor: pointer;
-      color: white;
-  }
-
-  .demo-button:active {
-      color: white;
-      background: #979799;
   }
 
   .auth-section {
@@ -177,11 +168,12 @@
 
   .edit,
   .delete {
-      color: #a02480;
+      color: #07167b;
       padding: 10px 20px;
       text-decoration: none;
       margin: 5px;
       border-radius: 40px;
+      font-weight: bold;
   }
 
   .edit:hover,
@@ -195,5 +187,9 @@
 
   .delete {
       background-color: burlywood;
+  }
+
+  img {
+    max-width: 100%;
   }
 </style>

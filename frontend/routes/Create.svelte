@@ -6,8 +6,8 @@
 
     // Use anonymouse mode only for local development
     // For production use, we want only users that signed with wallet to create/update/delete posts
-    //const [blog] = useCanister("blog")
-    const [blog] = useCanister("blog", { mode: "anonymous" })
+    const [blog] = useCanister("blog")
+    //const [blog] = useCanister("blog", { mode: "anonymous" })
 
     let loading = false
     let status = ""
@@ -33,7 +33,7 @@
             message = "Post couldn't be created: " + Object.keys(res.err)[0]
             status = "err"
         }
-        post.tags = post.tags.join(",")
+        post.tags = post.tags.join(",") // Convert tags back to string
         loading = false
     }
 </script>

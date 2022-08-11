@@ -91,15 +91,6 @@
         display: block;
     }
 
-    a {
-        color: #a02480;;
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-
     .posts {
         text-align: center;
         width: 500px;

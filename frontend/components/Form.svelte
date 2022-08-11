@@ -14,7 +14,8 @@
     <label id="content-label" for="content">Content:</label>
     <textarea name="content" bind:value="{post.content}" rows="20" cols="50"
         placeholder="What are you going to write about?" required></textarea><br>
-    {@html marked(post.content || "Loading")} <!-- Comment this if you don't want to see the preview of the post -->
+        Preview:
+    {@html marked(post.content || "")} <!-- Comment this if you don't want to see the preview of the post -->
     <label for="tags">Tags (comma separated):</label>
     <input type="text" name="tags" bind:value="{post.tags}" placeholder="Motoko,Svelte"><br>
     <label>
@@ -68,4 +69,5 @@ textarea:focus {
 .submit:hover {
     text-decoration: underline;
 }
+
 </style>

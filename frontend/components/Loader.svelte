@@ -14,7 +14,7 @@
 <style>
     .loader {
         position: absolute;
-        background-color: rgba(255, 255, 255, 0.5);
+        background-color: rgba(255, 255, 255, 0.8);
         /*dim the background*/
         top: 0;
         left: 0;

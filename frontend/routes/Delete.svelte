@@ -15,24 +15,22 @@
     const params = useParams();
 
     let postId = parseInt($params.id); // Get post ID from the URL
-    console.log($params.id)
+    //console.log($params.id)
 
     let post = {}
     let loading = false
     let status = ""
     let message = ""
-    let deleted = true
+    let deleted = false
 
     // Get the post that we want to delete
     const getPost = async () => {
         const res = await $blog.get(postId)
-        if("ok" in res){
+        if("ok" in res){ // Post delete succeeded
             post = res.ok
-        } else {
-            console.log(Object.keys(res.err)[0])
+        } else { 
             post = {
-                title: Object.keys(res.err)[0],
-                content: ""
+                title: Object.keys(res.err)[0], // Display error type if post couldn't be found
             }
         }
         loading = false
@@ -58,7 +56,8 @@
 {#if $isConnected && post.title} 
 <h1>Delete post: {post.title||"Loading"}</h1>
 <div class="question">Are you sure to delete this post?</div>
-<Link to="/post/{postId}">Go back</Link>
+<Link to="/">Go back</Link>
+{#if !deleted}
 <button type="submit" class="delete" on:click={deletePost} disabled={loading}>
     {#if loading === true}
         Loading...
@@ -66,6 +65,7 @@
         Delete post
     {/if}
 </button> 
+{/if}
 <div class="message {status}">{message}</div>
 {:else}
 You need to connect with a wallet do delete post
@@ -76,8 +76,8 @@ You need to connect with a wallet do delete post
 <style>
     .question {
         font-size: 120%;
+        margin-bottom: 10px;
     }
-
     .delete {
         color: #a02480;
         padding: 10px 20px;
@@ -96,17 +96,6 @@ You need to connect with a wallet do delete post
     }
 
     .message {
-        margin-top: 20px;
-        font-weight: bold;
-        display: block;
         width: 100%;
-    }
-
-    .err {
-        color: crimson;
-    }
-
-    .ok {
-        color: rgb(0, 173, 116);
     }
 </style>

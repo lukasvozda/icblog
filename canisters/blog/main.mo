@@ -6,6 +6,7 @@ import Iter "mo:base/Iter";
 import Array "mo:base/Array";
 import Principal "mo:base/Principal";
 import Result "mo:base/Result";
+import Order "mo:base/Order";
 
 actor {
 
@@ -134,7 +135,6 @@ actor {
         return #ok(()); // If all goes fine, return an OK result.
     };
 
-
     // Function for deleting a post is simple. We only want the user to be authenticated.
     public shared(msg) func  delete(id : PostId) : async Result.Result<(),Error> {
       if(Principal.isAnonymous(msg.caller)){
@@ -145,21 +145,20 @@ actor {
       }
     };
 
-    public query func get_all_posts() : async List.List<Post> {
-        let iter = blogposts.entries();
-        var post_list : List.List<Post> = List.nil();
-
-        for ((postNat, post) in iter){
-            //Prim.debugPrint(debug_show(post_list));
-            post_list := List.push<Post>(post, post_list);
-        };
-        return post_list;
+    // Comparison function that takes 2 posts as argument and decides the order of those posts
+    // We sort by the post ID argument, that should give the same order as time_created
+    func comp((id1 : PostId, p1 : Post),(id2 : PostId, p2 : Post)) : Order.Order {
+        if(id1 >= id2){
+          return #less; // we want a descendant sort
+        } else {
+          return  #greater;
+      };
     };
 
     // Lists all posts. We could check for the msg.caller (if authenticated) for 100 % prevention of anonymous users reading unpublished articles.
     // But this would make the call to take longer so we check authentication in the front-end only as we are not working with sensitive data.
     public query func list_all(): async [(PostId, Post)] {
-        return Iter.toArray(blogposts.entries());
+        return Array.sort(Iter.toArray(blogposts.entries()), comp);
     };
 
     // Internal function that returns BOOL for the published attribute.
@@ -167,8 +166,8 @@ actor {
       return p.published
     };
 
-    // Returns only published posts.
+    // Returns only published posts in descending order.
     public query func list_published(): async [(PostId, Post)] {
-        return Array.filter(Iter.toArray(blogposts.entries()), published);
-    };  
+        return Array.sort(Array.filter(Iter.toArray(blogposts.entries()), published), comp);
+    };    
 };
