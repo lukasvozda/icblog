@@ -29,7 +29,16 @@ dfx start --background (or run it in separate terminal window)
 dfx deploy (deploy your canister locally)
 npm run dev (run local dev server)
 ```
-
+Canisters are loaded in anonymous mode for local development. On production, we want create/update/delete methods to be allowed only for not anonymous users. This happens automatically based on global env variable:
+```
+const [blog] = process.env.NODE_ENV == "production" ? useCanister("blog") : useCanister("blog", { mode: "anonymous" })
+```
+In the backend, this part of code is currently commented for local development:
+```
+if(Principal.isAnonymous(msg.caller)){ // Only allows signed users to create a posts
+    return #err(#UserNotAuthenticated); // If the caller is anonymous Principal "2vxsx-fae" then return an error
+};
+```
 ## Deploy to the mainnet
 
 If you have working local development replica, you can deploy your project to the mainnet by running this command:
