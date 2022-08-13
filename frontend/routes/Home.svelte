@@ -5,7 +5,7 @@
     import Loader from "../components/Loader.svelte"
     import logo from "../assets/dfinity.svg"
 
-    const [blog] = useCanister("blog", { mode: "anonymous" })
+    const [blog ] = useCanister("blog", { mode: "anonymous" })
 
     let loading = true;
 
@@ -25,10 +25,8 @@
     const list_posts = async (connected) => {
         let res;
         if (connected || $isConnected) {
-            console.log("Getting all posts.")
             res = await $blog.list_all() // List all posts
         } else {
-            console.log("Getting published posts.")
             // List only published posts
             // We are doing this in the front end only as data are not sensitive, for 100 % security, we should verify principal in the backend too
             res = await $blog.list_published()
@@ -94,6 +92,7 @@
     .posts {
         text-align: center;
         width: 500px;
+        max-width: 90%;
         float: none;
         margin-left: auto;
         margin-right: auto;

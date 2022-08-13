@@ -11,7 +11,7 @@
     // Anonymous mode is enough for post reading
     const [blog] = useCanister("blog", { mode: "anonymous" })
 
-    const { isConnected } = useConnect() // Getting isConnected attribute from the connect2ic module so we know, whether user is authenticated with wallet
+    const { isConnected } = useConnect() // Getting isConnected attribute from the connect2ic module so we know whether user is authenticated with wallet
 
     const params = useParams();
 
@@ -83,6 +83,7 @@
         .posts {
             text-align: center;
             width: 500px;
+            max-width: 90%;
             float: none;
             margin-left: auto;
             margin-right: auto;

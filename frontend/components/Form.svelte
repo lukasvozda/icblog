@@ -70,4 +70,11 @@ textarea:focus {
     text-decoration: underline;
 }
 
+.submit:disabled {
+    background-color: rgb(155, 255, 222);
+    cursor: not-allowed;
+    text-decoration: none;
+}
+
+
 </style>

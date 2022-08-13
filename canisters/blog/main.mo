@@ -137,12 +137,11 @@ actor {
 
     // Function for deleting a post is simple. We only want the user to be authenticated.
     public shared(msg) func  delete(id : PostId) : async Result.Result<(),Error> {
-      if(Principal.isAnonymous(msg.caller)){
-        return #err(#UserNotAuthenticated);
-      } else {
+        // if(Principal.isAnonymous(msg.caller)){
+        //     return #err(#UserNotAuthenticated);
+        // }; 
         blogposts.delete(id);
         return #ok(());
-      }
     };
 
     // Comparison function that takes 2 posts as argument and decides the order of those posts

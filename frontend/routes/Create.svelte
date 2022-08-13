@@ -6,8 +6,7 @@
 
     // Use anonymouse mode only for local development
     // For production use, we want only users that signed with wallet to create/update/delete posts
-    //const [blog] = useCanister("blog")
-    const [blog] = useCanister("blog", { mode: "anonymous" })
+    const [blog] = process.env.NODE_ENV == "production" ? useCanister("blog") : useCanister("blog", { mode: "anonymous" })
 
     let loading = false
     let status = ""
@@ -56,6 +55,7 @@
 .posts {
     text-align: center;
     width: 500px;
+    max-width: 90%;
     float: none;
     margin-left: auto;
     margin-right: auto;
