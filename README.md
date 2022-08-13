@@ -6,7 +6,7 @@ You can try running version of this project on this link: [https://gaqra-oqaaa-a
 ### Backend
 The project consist of a backend written in Motoko programming language, that has been designed specifically for writing smart contracts on the Internet Computer Protocol. You can find backend code in the cansiters/blog/main.mo file.
 
-Backend defines a Post type, HashMap database and methods for CRUD interace.
+Backend defines a Post type, HashMap database and methods for CRUD interace. There are also functions for filtering only published posts and sorting posts in the right order.
 
 ### Frontend
 The front-end is written using the Svelte framework. There are Routes for Create, Read, Update, Delete, List posts. You can find it in the frontend/routes directory.
