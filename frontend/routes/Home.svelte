@@ -7,7 +7,7 @@
 
     const [blog ] = useCanister("blog", { mode: "anonymous" })
 
-    let loading = true;
+    let loading = true
 
     const { isConnected, principal } = useConnect({
         onConnect: () => {

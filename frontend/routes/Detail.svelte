@@ -25,7 +25,6 @@
         const res = await $blog.get(postId)
         if("ok" in res){
             post = res.ok
-
         } else {
             console.log(Object.keys(res.err)[0])
             post = {

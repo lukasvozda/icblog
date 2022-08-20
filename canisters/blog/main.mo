@@ -12,7 +12,7 @@ actor {
 
     type PostId = Nat;
 
-    // Post type is going to represent each post. You can add your own attributes.
+    // Post type is going to represent each post. You can add your own attributes (don't forget to also update create and update methods).
     type Post = {
         title : Text;
         time_created: Time.Time;
@@ -36,7 +36,7 @@ actor {
     
     /* 
     Stable array that will be used to keep posts between updates.
-    We need this because HashMap that we use to store posts is not stable storage.
+    We need this because HashMap that we use to store posts is not a stable storage.
     */  
     private stable var stableposts : [(PostId, Post)] = [];
         
@@ -45,7 +45,7 @@ actor {
 
     /*
         This is our database. I choose HashMap as it can store a lot of posts and read them individually effectively. 
-        HashMap is not a stable storageu, that is why we also defined stable array stableposts and preupgrade and postupgrade functions
+        HashMap is not a stable storage, that is why we also defined a stable array stableposts and preupgrade and postupgrade functions.
     */
     private var blogposts = Map.HashMap<PostId, Post>(0, eq, Hash.hash);
 
@@ -63,7 +63,7 @@ actor {
     /*
         Create function takes care of post creation. 
         It expects a simplified version of Post type as only some attributes are defined by the user.
-        Attributes like time_upated or author are defined in the backend.
+        Attributes such as time_upated or author are defined in the backend.
     */
     public shared(msg) func create(post : {title : Text; description : Text; content : Text; published : Bool; tags : [Text]}): async Result.Result<(),Error> {
         // Commented for local development, be sure to uncomment this for production use
@@ -77,7 +77,7 @@ actor {
         };
 
         let postId = next;
-        next += 1; // increment the counter so we never try to create a post under same index
+        next += 1; // increment the counter so we never try to create a post under the same index
 
         let blogpost: Post = {
             time_created = Time.now(); // Time is assigned on the backend side
@@ -101,7 +101,7 @@ actor {
         return Result.fromOption(post, #PostNotFound); // If the post is not found, this will return an error as result.
     };
 
-    // Function for post updating. Very similar to create function, only excepts ID of the post.
+    // Function for post updating. Very similar to create function, only excepts ID of the post as an argument.
     public shared(msg) func update(id : PostId, post : {title : Text; description : Text; content : Text; published : Bool; tags : [Text]}) : async Result.Result<(),Error> {
         // commented for local development 
         // if(Principal.isAnonymous(msg.caller)){
@@ -118,7 +118,7 @@ actor {
             case null { // If the result is null, we return a PostNotFound error.
                 return #err(#PostNotFound);
             };
-            case (? v){ // If post was found, we try to update it.
+            case (? v){ // If the post was found, we try to update it.
                 let blogpost : Post = {
                     time_created = v.time_created; // We don't touch time_created anymore.
                     time_updated = Time.now(); // Only update time_updated attribute.
@@ -126,7 +126,7 @@ actor {
                     content = post.content;
                     description = post.description;
                     published = post.published;
-                    author = v.author; // We could but we don't change the author – we keep the principal of the initial author.
+                    author = v.author; // We don't want to change the author – we keep the principal of the initial author.
                     tags = post.tags;
                 };
                 blogposts.put(id, blogpost);
@@ -140,11 +140,11 @@ actor {
         // if(Principal.isAnonymous(msg.caller)){
         //     return #err(#UserNotAuthenticated);
         // }; 
-        blogposts.delete(id);
+        blogposts.delete(id); 
         return #ok(());
     };
 
-    // Comparison function that takes 2 posts as argument and decides the order of those posts
+    // Comparison function that takes 2 posts as an argument and decides the order of those posts
     // We sort by the post ID argument, that should give the same order as time_created
     func comp((id1 : PostId, p1 : Post),(id2 : PostId, p2 : Post)) : Order.Order {
         if(id1 >= id2){

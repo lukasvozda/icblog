@@ -10,9 +10,9 @@
     // For production use, we want only users that signed with wallet to create/update/delete posts
     const [blog] = process.env.NODE_ENV == "production" ? useCanister("blog") : useCanister("blog", { mode: "anonymous" })
 
-    const params = useParams();
+    const params = useParams()
 
-    let postId = parseInt($params.id);
+    let postId = parseInt($params.id)
 
     let post = {}
     let loading = true

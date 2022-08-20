@@ -11,9 +11,9 @@
 
     const { isConnected } = useConnect() 
 
-    const params = useParams();
+    const params = useParams()
 
-    let postId = parseInt($params.id); // Get post ID from the URL
+    let postId = parseInt($params.id) // Get post ID from the URL
     //console.log($params.id)
 
     let post = {}
