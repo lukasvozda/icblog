@@ -29,7 +29,7 @@ Once you have cloned the repository, follow this process in your terminal:
 ```
 $ npm install
 ```
-2. Start local Internet Computer replica (or open new terminal window and run it without the --background parameter):
+2. Start local Internet Computer replica (or open a new terminal window and run it without the --background parameter):
 ```
 $ dfx start --background 
 ```
@@ -41,9 +41,9 @@ $ dfx deploy
 ```
 $ npm run dev
 ```
-You should see a local host URL "Local: http://localhost:3000/" in your terminal. Open this in your web browser and see the app running.
+You should see a localhost URL looking like this "Local: http://localhost:3000/" in your terminal. Open this in your web browser and see the app running.
 
-Canisters are loaded in anonymous mode for local development. In production, we want create/update/delete methods to be allowed only for not anonymous users. This happens automatically based on global env variable:
+Canisters are working in anonymous mode for local development. In production, we want create/update/delete methods to be allowed only for not anonymous users. This happens automatically based on global env variable in the frontend:
 ```
 const [blog] = process.env.NODE_ENV == "production" ? useCanister("blog") : useCanister("blog", { mode: "anonymous" })
 ```

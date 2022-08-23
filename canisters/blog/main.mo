@@ -49,6 +49,23 @@ actor {
     */
     private var blogposts = Map.HashMap<PostId, Post>(0, eq, Hash.hash);
 
+    /*
+        Create a sample blogpost so developers can see some content on the page when they run the app for the first time.
+        Once you connect your wallet and create your own posts, you can remove this code, it becomes unnecessary. 
+    */
+    let blogpost: Post = {
+        time_created = Time.now(); 
+        time_updated = Time.now();
+        title = "Hello World!" ;
+        description = "This is a sample blogpost that has been created upon canister deployment so you can see some content when you run this app locally. You should connect to edit this post or create your own posts.";
+        content = "This is a sample blogpost that has been created upon canister deployment so you can see some content when you run this app locally. You should connect to edit this post or create your own posts.";
+        published = true;
+        author = Principal.fromText("2vxsx-fae"); // Anonymous principal
+        tags = ["Example","Hello"];
+    };
+
+    blogposts.put(0, blogpost);
+
     // Preupgrade function will store all posts into stable array before update
     system func preupgrade() {
         stableposts := Iter.toArray(blogposts.entries());
