@@ -58,7 +58,7 @@ actor {
         time_updated = Time.now();
         title = "Hello World!" ;
         description = "This is a sample blogpost that has been created upon canister deployment so you can see some content when you run this app locally. You should connect to edit this post or create your own posts.";
-        content = "This is a sample blogpost that has been created upon canister deployment so you can see some content when you run this app locally. You should connect to edit this post or create your own posts.";
+        content = "This is a sample blogpost that has been created upon canister deployment so you can see some content when you run this app locally. You should connect to edit this post or create your own posts. \n ![This is an image](https://picsum.photos/640/360)";
         published = true;
         author = Principal.fromText("2vxsx-fae"); // Anonymous principal
         tags = ["Example","Hello"];
