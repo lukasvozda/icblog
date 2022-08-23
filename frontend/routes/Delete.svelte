@@ -78,13 +78,11 @@ You need to connect with a wallet do delete post
         margin-bottom: 10px;
     }
     .delete {
-        color: #a02480;
         padding: 10px 20px;
         text-decoration: none;
         margin: 20px;
         border-radius: 40px;
-        font-size: 120%;
-        ;
+        font-size: 110%;
         border: none;
         background-color: burlywood;
         cursor: pointer;

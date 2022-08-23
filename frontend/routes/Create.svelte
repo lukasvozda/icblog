@@ -1,5 +1,5 @@
 <script>
-    import { useCanister } from "@connect2ic/svelte"
+    import { useCanister, useConnect } from "@connect2ic/svelte"
     import { Link } from "svelte-navigator";
     import Loader from "../components/Loader.svelte" // Loader animation
     import Form from "../components/Form.svelte" // Form component is shared for post Create and Update route
@@ -7,6 +7,9 @@
     // Use anonymouse mode only for local development
     // For production use, we want only users that signed with wallet to create/update/delete posts
     const [blog] = process.env.NODE_ENV == "production" ? useCanister("blog") : useCanister("blog", { mode: "anonymous" })
+
+    // Get the isConnected value from the conenct2ic store so we know, whether user is connected
+    const { isConnected } = useConnect() 
 
     let loading = false
     let status = ""
@@ -44,8 +47,12 @@
 <div class="posts">
     <div class="post">
         <div>
-            <Form loading={loading} post={post} submit_function={createPost}/>
-            <div class="message {status}">{message}</div>
+            {#if $isConnected}
+                <Form loading={loading} post={post} submit_function={createPost}/>
+                <div class="message {status}">{message}</div>
+            {:else}
+                You should connect with a wallet to be able to update this post.
+            {/if}
         </div>
     </div>
 </div>
