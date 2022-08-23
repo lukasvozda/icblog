@@ -25,12 +25,24 @@ We assume that you have:
 
 Once you have cloned the repository, follow this process in your terminal:
 
+1. In your project directory, run this command to install JS dependencies:
 ```
-run npm install (installs JS dependencies)
-dfx start --background (or run it in separate terminal window)
-dfx deploy (deploy your canister locally)
-npm run dev (run local dev server)
+$ npm install
 ```
+2. Start local Internet Computer replica (or open new terminal window and run it without the --background parameter):
+```
+$ dfx start --background 
+```
+3. Deploy your canisters locally:
+```
+$ dfx deploy
+```
+4. Run local dev server:
+```
+$ npm run dev
+```
+You should see a local host URL "Local: http://localhost:3000/" in your terminal. Open this in your web browser and see the app running.
+
 Canisters are loaded in anonymous mode for local development. In production, we want create/update/delete methods to be allowed only for not anonymous users. This happens automatically based on global env variable:
 ```
 const [blog] = process.env.NODE_ENV == "production" ? useCanister("blog") : useCanister("blog", { mode: "anonymous" })
@@ -45,7 +57,7 @@ if(Principal.isAnonymous(msg.caller)){ // Only allows signed users to create a p
 
 If you have working local development replica, you can deploy your project to the mainnet by running this command:
 ```
-dfx deploy --network ic
+$ dfx deploy --network ic
 ```
 You are going to need a cycles wallet. Go through [this tutorial](https://internetcomputer.org/docs/current/developer-docs/quickstart/network-quickstart) to make it working.
 
