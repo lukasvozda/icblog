@@ -6,7 +6,7 @@ It is a simple blog site that allows authenticated users to create, read, update
 You can try running version of this project on this link: [https://gaqra-oqaaa-aaaah-qc4qa-cai.ic0.app](https://gaqra-oqaaa-aaaah-qc4qa-cai.ic0.app)
 
 ### Backend
-The project consist of a backend written in Motoko programming language, that has been designed specifically for writing smart contracts on the Internet Computer Protocol. You can find backend code in the cansiters/blog/main.mo file.
+The project consist of a backend written in Motoko programming language, that has been designed specifically for writing smart contracts on the Internet Computer Protocol. You can find backend code in the canisters/blog/main.mo file.
 
 Backend defines a Post type, HashMap as a database and methods for CRUD interace. There are also functions for filtering only published posts and sorting posts in the right order.
 
